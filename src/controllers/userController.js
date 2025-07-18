@@ -35,8 +35,8 @@ export const register = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: err.message,
-    });
-  }
+});
+}
 };
 
 export const login = async (req, res) => {
@@ -51,7 +51,7 @@ export const login = async (req, res) => {
       });
     }
 
-    // Compare password
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({
@@ -60,12 +60,12 @@ export const login = async (req, res) => {
       });
     }
 
-    // Generate JWT
+  
     const token = jwt.sign({ id: user._id }, process.env.secretKey, {
       expiresIn: "5m",
     });
 
-    // Optionally update token field if you store it in DB
+ 
     user.token = token;
     await user.save();
 
